@@ -329,6 +329,10 @@ static inline struct FlowNode *ProcessIPfrag(packetParam_t *packetParam, const s
         return NULL;
     }
 
+    if (!Node->payload) {
+        // allocate enough memory for packet
+        Node->payload = calloc(1, 65536);
+    }
     memcpy(Node->payload + frag_offset, dataptr, len);
 
     if ((ip_off & IP_MF) == 0) {
